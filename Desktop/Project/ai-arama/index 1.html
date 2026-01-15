@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAIROS | Profesyonel Yapay Zeka Randevu Asistanı</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2563eb; 
+      --primary-dark: #1d4ed8;
+      --secondary: #64748b;
+      --bg-light: #f8fafc;
+      --text-dark: #0f172a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: var(--text-dark);
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+
+    /* --- NAVBAR --- */
+    .navbar { padding: 1.2rem 0; border-bottom: 1px solid #e2e8f0; background: white !important; }
+    .navbar-brand { font-weight: 900; font-size: 2rem; color: var(--primary) !important; letter-spacing: -1.5px; }
+
+    /* --- HERO --- */
+    .hero-section {
+      padding: 140px 0 100px 0;
+      background: radial-gradient(circle at 50% -20%, #eff6ff 0%, #ffffff 70%);
+    }
+    .hero-title {
+      font-weight: 900;
+      font-size: 4.5rem;
+      letter-spacing: -2.5px;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    /* --- NEDEN KAIROS --- */
+    .why-kairos-container {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 32px;
+      padding: 5rem 4rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+    .feature-item {
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      border-radius: 20px;
+      transition: 0.3s;
+      height: 100%;
+    }
+    .feature-item:hover { background: #f8fafc; }
+    .feature-icon {
+      width: 60px; height: 60px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 15px; font-size: 1.6rem; flex-shrink: 0;
+    }
+
+    /* --- PARTNERS --- */
+    .partner-card {
+      background: white; border: 1px solid #e2e8f0; border-radius: 20px;
+      padding: 2.5rem 1.5rem; text-align: center; transition: 0.3s;
+    }
+    .partner-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+    .partner-card i { font-size: 3rem; margin-bottom: 1rem; }
+    .partner-card span { font-weight: 800; font-size: 1.3rem; display: block; }
+
+    /* --- PRICING --- */
+    .pricing-card {
+      border-radius: 30px; padding: 4rem 3rem; border: 1px solid #e2e8f0; background: white; transition: 0.3s;
+    }
+    .pricing-card.premium {
+      border: 3px solid var(--primary); 
+      box-shadow: 0 30px 60px -12px rgba(37, 99, 235, 0.2);
+      transform: scale(1.05);
+      z-index: 2;
+    }
+    .price-tag { font-size: 4rem; font-weight: 900; letter-spacing: -2px; }
+
+    /* --- SOCIAL PROOF --- */
+    .rating-container {
+      background: #fffbeb; border: 2px solid #fde68a;
+      display: inline-flex; align-items: center; gap: 20px;
+      padding: 1.2rem 2.5rem; border-radius: 100px; margin-bottom: 3rem;
+    }
+    .testimonial-card {
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 24px; padding: 3rem;
+    }
+
+    /* --- DASHBOARD STYLES --- */
+    .nav-item-custom {
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center; gap: 12px;
+      color: #94a3b8; transition: 0.2s;
+    }
+    .nav-item-custom:hover, .nav-item-custom.active {
+      background: rgba(255,255,255,0.1); color: white;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px; margin-top: 20px;
+    }
+    .calendar-day {
+      min-height: 120px;
+      border: 1px solid #f1f5f9; border-radius: 12px;
+      padding: 10px; display: flex; flex-direction: column;
+      background: white;
+      cursor: pointer; transition: 0.2s;
+    }
+    .calendar-day:hover { border-color: var(--primary); background: #f8fafc; }
+    .calendar-day.today { border: 2px solid var(--primary); background: #eff6ff; }
+    .day-label { font-weight: 800; color: var(--secondary); text-align: center; font-size: 0.9rem; }
+
+    .apt-info-tag {
+      background: var(--primary);
+      color: white;
+      font-size: 0.7rem;
+      padding: 6px;
+      border-radius: 8px;
+      margin-top: 5px;
+      font-weight: 600;
+      position: relative;
+      border-left: 3px solid #fff;
+    }
+    .apt-delete-btn {
+      position: absolute;
+      top: 2px;
+      right: 4px;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: 0.2s;
+    }
+    .apt-delete-btn:hover { color: #ff4d4d; }
+
+    .service-row {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#" onclick="location.reload()">KAIROS</a>
+      <div class="d-flex gap-3 align-items-center">
+        <button onclick="openApp('business', 'login')" class="btn btn-link text-dark fw-bold text-decoration-none fs-6">İşletme Girişi</button>
+        <button onclick="openApp('customer', 'login')" class="btn btn-outline-primary fw-bold px-4 py-2 rounded-pill">Müşteri Girişi</button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="landing-page">
+    <header class="hero-section text-center">
+      <div class="container">
+        <h1 class="hero-title">Randevularınızı <br> Otonom Yönetin</h1>
+        <p class="lead text-secondary mb-5 mx-auto fs-3 fw-medium" style="max-width: 850px;">
+          Türkiye'nin ilk profesyonel yapay zeka sesli asistanı. Telefon trafiğini sıfırlayın, verimliliğinizi %40 artırın.
+        </p>
+        <div class="d-flex justify-content-center gap-4">
+          <button onclick="openApp('business', 'register')" class="btn btn-kairos-main shadow-lg">İşletmeni Kaydet</button>
+          <button onclick="openApp('customer', 'register')" class="btn btn-outline-dark btn-lg px-5 fw-bold rounded-4">Müşteri Olarak Kayıt Ol</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="py-5">
+      <div class="container">
+        <div class="why-kairos-container">
+          <h2 class="text-center fw-900 mb-5 fs-1">Neden KAIROS'u Seçmelisiniz?</h2>
+          <div class="row g-5">
+            <div class="col-md-4">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-clock"></i></div>
+                <div><h5 class="fw-bold">Günde 2 Saat Tasarruf</h5><p class="text-secondary small">Telefon trafiğini AI yönetir, siz sanata odaklanırsınız.</p></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
+                <div><h5 class="fw-bold">7/24 Aktif Asistan</h5><p class="text-secondary small">Mesai saati bittiğinde bile müşterilerinizi yanıtlar.</p></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-phone-slash"></i></div>
+                <div><h5 class="fw-bold">Sıfır Kaçırılan Randevu</h5><p class="text-secondary small">Meşgulken çalan her telefonu AI yanıtlar, müşteri kaybetmezsiniz.</p></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                <div><h5 class="fw-bold">%99 İnsan Doğallığı</h5><p class="text-secondary small">Müşterileriniz yapay zeka ile konuştuğunu fark etmez.</p></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div><h5 class="fw-bold">Akıllı Ciro Analizi</h5><p class="text-secondary small">Gelecek ayki kazancınızı AI verileriyle şimdiden görün.</p></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="feature-item">
+                <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
+                <div><h5 class="fw-bold">Maliyet Tasarrufu</h5><p class="text-secondary small">Sekreter maliyetinden %80 oranında tasarruf edin.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 bg-light">
+      <div class="container text-center">
+        <h2 class="section-title">Güvenilir Ortaklarımız</h2>
+        <div class="row g-4 text-start">
+          <div class="col-md-2 col-6"><div class="partner-card"><i class="fa-brands fa-google text-primary"></i><span>Google</span><small class="text-muted">Cloud Infra</small></div></div>
+          <div class="col-md-2 col-6"><div class="partner-card"><i class="fa-solid fa-brain text-dark"></i><span>OpenAI</span><small class="text-muted">GPT-4o Engine</small></div></div>
+          <div class="col-md-2 col-6"><div class="partner-card"><i class="fa-solid fa-phone-volume text-danger"></i><span>Twilio</span><small class="text-muted">Voice System</small></div></div>
+          <div class="col-md-2 col-6"><div class="partner-card"><i class="fa-brands fa-stripe text-info"></i><span>Stripe</span><small class="text-muted">Secure Pay</small></div></div>
+          <div class="col-md-2 col-6"><div class="partner-card"><i class="fa-brands fa-aws text-warning"></i><span>AWS</span><small class="text-muted">Data Storage</small></div></div>
+          <div class="col-md-2 col-6"><div class="partner-card"><i class="fa-brands fa-microsoft text-primary"></i><span>Azure</span><small class="text-muted">Security</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="container">
+        <h2 class="section-title">Yatırım Planları</h2>
+        <div class="row g-5 justify-content-center align-items-center">
+          <div class="col-md-5">
+            <div class="pricing-card">
+              <h3 class="fw-bold mb-3">Başlangıç</h3>
+              <div class="price-tag mb-4 text-dark">₺0 <small class="fs-5 text-secondary">/Süresiz</small></div>
+              <ul class="list-unstyled mb-5 text-secondary">
+                <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Web Randevu Paneli</li>
+                <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Manuel Takvim Yönetimi</li>
+                <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Aylık 10 Randevu Limiti</li>
+              </ul>
+              <button onclick="openApp('business', 'register')" class="btn btn-outline-dark w-100 py-3 fw-bold rounded-3">Ücretsiz Dene</button>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="pricing-card premium">
+              <div class="badge bg-primary px-3 py-2 mb-3">İLK 100 İŞLETMEYE ÖZEL %50 İNDİRİM</div>
+              <h3 class="fw-bold mb-1">Olympus Pro</h3>
+              <p class="text-secondary small mb-3">İşletmenizi Otonom Hale Getirin</p>
+              <div class="price-tag mb-4 text-primary">₺249 <small class="fs-5 text-secondary">/Aylık</small></div>
+              <ul class="list-unstyled mb-5">
+                <li class="mb-3 fw-bold"><i class="fa-solid fa-bolt text-warning me-2"></i> SINIRSIZ Yapay Zeka Sesli Görüşme</li>
+                <li class="mb-3"><i class="fa-solid fa-check text-primary me-2"></i> WhatsApp & SMS Onay/Hatırlatma</li>
+                <li class="mb-3"><i class="fa-solid fa-check text-primary me-2"></i> Akıllı Randevu Çakışma Önleyici</li>
+                <li class="mb-3"><i class="fa-solid fa-check text-primary me-2"></i> Ses Tonu Özelleştirme</li>
+                <li class="mb-3"><i class="fa-solid fa-check text-primary me-2"></i> Gelişmiş Ciro Tahminleme Engine</li>
+              </ul>
+              <button onclick="openApp('business', 'register')" class="btn btn-kairos-main w-100 py-4 shadow">GÜCÜ HİSSET</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 bg-light">
+      <div class="container text-center">
+        <div class="rating-container">
+          <div class="text-warning fs-2 fw-900"><i class="fa-solid fa-star"></i> 4.9 / 5.0</div>
+          <div class="vr"></div>
+          <div class="fw-bold text-dark text-start">
+            <div class="fs-5">+500 Doğrulanmış İşletme</div>
+            <div class="small opacity-50">Sektör Lideri</div>
+          </div>
+        </div>
+        <h2 class="section-title mt-4">Neden Bize Güveniyorlar?</h2>
+        <div class="row g-4 text-start">
+          <div class="col-md-4"><div class="testimonial-card shadow-sm">
+            <div class="text-warning mb-3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="font-italic">"Telefon trafiğim %90 azaldı, müşterilerim bu profesyonelliğe bayıldı. AI asistan değil sanki gerçek bir sekreter."</p>
+            <h6 class="fw-bold mt-4 mb-0">Mehmet Yılmaz</h6><small class="text-secondary">Gentleman's Barber Sahibi</small>
+          </div></div>
+          <div class="col-md-4"><div class="testimonial-card shadow-sm">
+            <div class="text-warning mb-3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="font-italic">"Gece gelen randevu taleplerini bile kaçırmıyoruz. Ciro artışımız ilk aydan %30 seviyesine çıktı."</p>
+            <h6 class="fw-bold mt-4 mb-0">Ayşe Demir</h6><small class="text-secondary">Bella Güzellik Merkezi</small>
+          </div></div>
+          <div class="col-md-4"><div class="testimonial-card shadow-sm">
+            <div class="text-warning mb-3"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p class="font-italic">"Sistemin kurulumu sadece 5 dakika sürdü. Klinik yönetmek hiç bu kadar teknolojik olmamıştı."</p>
+            <h6 class="fw-bold mt-4 mb-0">Can Öztürk</h6><small class="text-secondary">DentSmile Diş Kliniği</small>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 bg-white">
+      <div class="container">
+        <h2 class="section-title">Aklınıza Takılanlar</h2>
+        <div class="accordion mx-auto border-0" id="faqAcc" style="max-width: 1000px;">
+          <div class="accordion-item shadow-sm mb-3 rounded-4 overflow-hidden border">
+            <h2 class="accordion-header"><button class="accordion-button fw-bold py-4" data-bs-toggle="collapse" data-bs-target="#f1">Yapay zeka sesi çok mu robotik?</button></h2>
+            <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faqAcc"><div class="accordion-body text-secondary">Hayır. En son teknoloji motorlarımızı kullanıyoruz. Müşterileriniz farkı anlamayacak.</div></div>
+          </div>
+          <div class="accordion-item shadow-sm mb-3 rounded-4 overflow-hidden border">
+            <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold py-4" data-bs-toggle="collapse" data-bs-target="#f2">Numaramı taşımam gerekiyor mu?</button></h2>
+            <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body text-secondary">Hayır. Mevcut numaranızı yönlendirebilirsiniz.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text-center">
+      <div class="container"><h2 class="fw-900 text-white mb-4">KAIROS</h2><p class="small opacity-50">© 2026 KAIROS AI Labs. Tüm Hakları Saklıdır.</p></div>
+    </footer>
+  </div>
+
+  <div id="app-interface" style="display: none;">
+    <aside class="sidebar p-4 bg-dark text-white shadow-lg" style="width: 300px; min-height: 100vh;">
+      <h2 class="fw-900 mb-5 text-primary">KAIROS</h2>
+      <div id="sidebar-menu"></div>
+      <div class="mt-auto pt-5"><button onclick="location.reload()" class="btn btn-danger w-100 fw-bold py-3 rounded-3">GÜVENLİ ÇIKIŞ</button></div>
+    </aside>
+    <main class="flex-grow-1 p-5 bg-light" style="overflow-y: auto;">
+      <h2 id="page-title" class="fw-900 mb-5">Yönetim Paneli</h2>
+      <div id="app-content"></div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <script>
+    const sbUrl = 'https://fkpgsfnueqoqvbiuazvc.supabase.co';
+    const sbKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrcGdzZm51ZXFvcXZiaXVhenZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMTEwMzUsImV4cCI6MjA3OTU4NzAzNX0.Je5QTZAAlrscZqYSTUxe1jpgZbHAgi38_X4K-109Sio';
+    const supabaseClient = supabase.createClient(sbUrl, sbKey);
+    let currentUser = null, currentRole = null;
+
+    // --- DEĞİŞKENLER ---
+    let bizSettings = { type: 'Berber', customType: '', description: '', address: '', services: [] };
+    let calendarDate = new Date(); 
+    let dbAppointments = []; 
+    let allBusinesses = [];
+    let allCustomers = [];
+
+    function openApp(role, mode) { document.getElementById('landing-page').style.display = 'none'; renderAuthForm(role, mode); }
+    
+    function renderAuthForm(role, mode) {
+      const old = document.getElementById('auth-container'); if(old) old.remove();
+      const div = document.createElement('div'); div.id = 'auth-container';
+      div.innerHTML = `<div class="container py-5"><div class="auth-card mx-auto p-5 bg-white rounded-4 shadow-lg" style="max-width:500px">
+        <button onclick="location.reload()" class="btn btn-link text-decoration-none p-0 mb-4"><i class="fa-solid fa-arrow-left"></i> Geri Dön</button>
+        <h3 class="fw-900 mb-4">${role === 'business' ? 'İşletme' : 'Müşteri'} ${mode === 'login' ? 'Girişi' : 'Kaydı'}</h3>
+        <form onsubmit="handleAuth(event, '${role}', '${mode}')">
+          ${mode === 'register' ? `<div class="mb-3"><label class="small fw-bold">AD / İŞLETME ADI</label><input type="text" id="regName" class="form-control py-3" required></div>` : ''}
+          <div class="mb-3"><label class="small fw-bold">İLETİŞİM BİLGİSİ</label><input type="text" id="authId" class="form-control py-3" placeholder="${role === 'business' ? 'E-posta' : 'Telefon'}" required></div>
+          <div class="mb-4"><label class="small fw-bold">ŞİFRE</label><input type="password" id="authPass" class="form-control py-3" required></div>
+          <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 fs-5">${mode === 'login' ? 'GİRİŞ YAP' : 'HESAP OLUŞTUR'}</button>
+        </form></div></div>`;
+      document.body.appendChild(div);
+    }
+
+    async function handleAuth(e, role, mode) {
+      e.preventDefault(); const id = document.getElementById('authId').value, pass = document.getElementById('authPass').value, table = role === 'business' ? 'businesses' : 'customers';
+      try {
+        if(mode === 'register') {
+          await supabaseClient.from(table).insert([{ password: pass, [role === 'business' ? 'email' : 'phone']: id, [role === 'business' ? 'business_name' : 'full_name']: document.getElementById('regName').value, ai_services: [] }]);
+          alert("Kayıt başarılı."); renderAuthForm(role, 'login');
+        } else {
+          let { data, error } = await supabaseClient.from(table).select('*').eq('password', pass).eq(role === 'business' ? 'email' : 'phone', id).single();
+          if(error) throw error; 
+          currentUser = data; 
+          currentRole = role; 
+
+          if(role === 'business') {
+            bizSettings.type = data.business_type || 'Berber';
+            bizSettings.customType = data.custom_type || '';
+            bizSettings.description = data.description || '';
+            bizSettings.address = data.address || '';
+            let servicesData = data.ai_services;
+            if (typeof servicesData === 'string') { try { servicesData = JSON.parse(servicesData); } catch(e) { servicesData = []; } }
+            bizSettings.services = Array.isArray(servicesData) ? servicesData : [];
+            await fetchBusinessData();
+          }
+          document.getElementById('auth-container').remove(); 
+          startApp();
+        }
+      } catch(err) { alert("Hata: " + err.message); }
+    }
+
+    async function fetchBusinessData() {
+        const { data: custs } = await supabaseClient.from('customers').select('*');
+        allCustomers = custs || [];
+        const { data: apts } = await supabaseClient.from('appointments').select('*').eq('business_id', currentUser.id);
+        dbAppointments = apts || [];
+    }
+
+    function startApp() {
+      document.getElementById('app-interface').style.display = 'flex';
+      setupSidebar();
+      if(currentRole === 'business') showView('dashboard');
+      else loadDashboard();
+    }
+
+    function setupSidebar() {
+      const menu = document.getElementById('sidebar-menu');
+      if (currentRole === 'business') {
+        menu.innerHTML = `
+          <div class="nav-item-custom active" id="side-dash" onclick="showView('dashboard')"><i class="fa-solid fa-chart-line me-2"></i> Dashboard</div>
+          <div class="nav-item-custom" id="side-cust" onclick="showView('customize')"><i class="fa-solid fa-sliders me-2"></i> İşletmeyi Özelleştir</div>
+        `;
+      } else {
+        menu.innerHTML = `<div class="nav-item-custom active"><i class="fa-solid fa-shop me-2"></i> İşletmeler</div>`;
+      }
+    }
+
+    async function showView(view) {
+      const content = document.getElementById('app-content');
+      const title = document.getElementById('page-title');
+      if (document.getElementById('side-dash')) {
+        document.getElementById('side-dash').classList.toggle('active', view === 'dashboard');
+        document.getElementById('side-cust').classList.toggle('active', view === 'customize');
+      }
+
+      if (view === 'dashboard') {
+        title.innerText = "Yönetim Paneli";
+        await fetchBusinessData();
+        const totalEarnings = dbAppointments.reduce((sum, item) => sum + (parseInt(item.price) || 0), 0);
+        content.innerHTML = `
+          <div class="row g-4 mb-4">
+            <div class="col-md-4">
+              <div class="p-4 bg-white rounded-4 border shadow-sm h-100 text-center">
+                <p class="text-secondary small fw-bold text-uppercase">Tahmini Kazanç</p>
+                <h1 class="fw-900 text-primary">₺${totalEarnings}</h1>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="p-4 bg-white rounded-4 border shadow-sm">
+                <p class="text-secondary small fw-bold mb-3 uppercase">MANUEL RANDEVU EKLEME</p>
+                <div class="row g-2">
+                  <div class="col-md-3">
+                    <select id="simCustomer" class="form-select form-select-sm">
+                      ${allCustomers.map(c => `<option value="${c.id}">${c.full_name}</option>`).join('')}
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <select id="simService" class="form-select form-select-sm">
+                      ${bizSettings.services.map(s => `<option value="${s.id}">${s.name}</option>`).join('')}
+                    </select>
+                  </div>
+                  <div class="col-md-3"><input type="date" id="simDateFull" class="form-control form-control-sm"></div>
+                  <div class="col-md-1"><input type="time" id="simTime" class="form-control form-control-sm"></div>
+                  <div class="col-md-2"><button class="btn btn-primary btn-sm w-100 fw-bold" onclick="advancedSimulate()">KAYDET</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 bg-white rounded-4 border shadow-sm mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <button class="btn btn-outline-primary btn-sm px-3" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i> Geri</button>
+                <h4 class="fw-900 mb-0 text-uppercase" id="calMonthLabel">Ocak 2026</h4>
+                <button class="btn btn-outline-primary btn-sm px-3" onclick="changeMonth(1)">İleri <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="calendar-grid" id="calGrid"></div>
+          </div>`;
+        renderCalendar();
+      } else if (view === 'customize') {
+        title.innerText = "İşletmeyi Özelleştir";
+        content.innerHTML = `
+          <div class="p-5 bg-white rounded-4 border shadow-sm">
+            <div class="mb-4">
+                <label class="form-label fw-bold text-uppercase small">Sektör Seçimi</label>
+                <select class="form-select py-3 mb-2" id="bizSelect" onchange="toggleCustomBizType(this.value)">
+                  <option value="Berber" ${bizSettings.type === 'Berber' ? 'selected' : ''}>Berber</option>
+                  <option value="Kuaför" ${bizSettings.type === 'Kuaför' ? 'selected' : ''}>Kuaför</option>
+                  <option value="Özel" ${bizSettings.type === 'Özel' ? 'selected' : ''}>Diğer (Özel)</option>
+                </select>
+                <input type="text" id="customBizInput" class="form-control py-3 ${bizSettings.type === 'Özel' ? '' : 'd-none'}" placeholder="İşletme Türü" value="${bizSettings.customType}">
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-bold text-uppercase small">İşletme Özeti</label>
+                <textarea id="bizDescription" class="form-control" rows="3" placeholder="İşletmenizi tanıtın...">${bizSettings.description}</textarea>
+            </div>
+            <div class="mb-4">
+                <label class="form-label fw-bold text-uppercase small">Adres</label>
+                <input type="text" id="bizAddress" class="form-control py-3" placeholder="Tam adresiniz..." value="${bizSettings.address}">
+            </div>
+            <hr class="my-5">
+            <h5 class="fw-900 mb-4 text-uppercase">Hizmetlerinizi Yönetin</h5>
+            <div id="servicesListContainer"></div>
+            <div class="bg-light p-4 rounded-4 mt-4 border">
+                <h6 class="fw-bold mb-3">Yeni Hizmet</h6>
+                <div class="row g-3">
+                    <div class="col-md-6"><input type="text" id="newServiceName" class="form-control" placeholder="Hizmet Adı"></div>
+                    <div class="col-md-4"><input type="number" id="newServicePrice" class="form-control" placeholder="₺"></div>
+                    <div class="col-md-2"><button class="btn btn-dark w-100 h-100 fw-bold" onclick="addNewService()">EKLE</button></div>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-5 px-5 py-3 fw-bold shadow" onclick="saveBizSettings()">TÜMÜNÜ KAYDET</button>
+          </div>`;
+          renderServicesInSettings();
+      }
+    }
+
+    function toggleCustomBizType(val) { const input = document.getElementById('customBizInput'); if(val === 'Özel') input.classList.remove('d-none'); else input.classList.add('d-none'); }
+    function renderServicesInSettings() {
+        const container = document.getElementById('servicesListContainer');
+        if(!container) return;
+        if (!Array.isArray(bizSettings.services)) bizSettings.services = [];
+        container.innerHTML = bizSettings.services.map(s => `<div class="service-row"><span class="fw-bold">${s.name}</span><div class="d-flex align-items-center gap-3"><span class="badge bg-primary fs-6">₺${s.price}</span><button class="btn btn-outline-danger btn-sm" onclick="removeService(${s.id})"><i class="fa-solid fa-trash"></i></button></div></div>`).join('') || '<p class="text-muted small">Hizmet yok.</p>';
+    }
+    function addNewService() {
+        const name = document.getElementById('newServiceName').value, price = document.getElementById('newServicePrice').value;
+        if(!name || !price) return alert("Lütfen ad ve fiyat girin.");
+        bizSettings.services.push({ id: Date.now(), name: name, price: parseInt(price) });
+        document.getElementById('newServiceName').value = ''; document.getElementById('newServicePrice').value = ''; 
+        renderServicesInSettings();
+    }
+    function removeService(id) { bizSettings.services = bizSettings.services.filter(s => s.id !== id); renderServicesInSettings(); }
+
+    function changeMonth(offset) { calendarDate.setMonth(calendarDate.getMonth() + offset); renderCalendar(); }
+    
+    function renderCalendar() {
+      const grid = document.getElementById('calGrid'); if(!grid) return;
+      const year = calendarDate.getFullYear(), month = calendarDate.getMonth();
+      document.getElementById('calMonthLabel').innerText = new Intl.DateTimeFormat('tr-TR', { month: 'long', year: 'numeric' }).format(calendarDate).toUpperCase();
+      const days = ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'];
+      let html = days.map(d => `<div class="day-label text-center font-bold small opacity-50">${d}</div>`).join('');
+      const padding = new Date(year, month, 1).getDay() === 0 ? 6 : new Date(year, month, 1).getDay() - 1;
+      for(let p=0; p<padding; p++) html += `<div></div>`;
+      for(let i=1; i<=new Date(year, month + 1, 0).getDate(); i++) {
+        const currentLoopDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+        const dayApts = dbAppointments.filter(a => a.date === currentLoopDate);
+        const isToday = new Date().toDateString() === new Date(year, month, i).toDateString();
+        
+        html += `<div class="calendar-day ${isToday ? 'today' : ''}">
+          <strong class="small opacity-50">${i}</strong>
+          <div class="mt-1">
+            ${dayApts.map(a => {
+                const customer = allCustomers.find(c => c.id.toString() === a.customer_id?.toString());
+                const cName = customer ? customer.full_name : "Manuel Giriş";
+                return `<div class="apt-info-tag">
+                  <i class="fa-solid fa-circle-xmark apt-delete-btn" onclick="deleteAppointment(${a.id})" title="Sil"></i>
+                  <strong>${a.time}</strong> - ${getServiceNameById(a.service_id)}<br>
+                  <small style="opacity:0.8; font-style:italic">👤 ${cName}</small>
+                </div>`;
+            }).join('')}
+          </div>
+        </div>`;
+      }
+      grid.innerHTML = html;
+    }
+
+    async function deleteAppointment(aptId) {
+        if(!confirm("Bu randevuyu silmek istediğinizden emin misiniz?")) return;
+        try {
+            const { error } = await supabaseClient.from('appointments').delete().eq('id', aptId);
+            if(error) throw error;
+            alert("Silindi."); showView('dashboard');
+        } catch (err) { alert("Hata: " + err.message); }
+    }
+
+    function getServiceNameById(id) {
+        const s = bizSettings.services.find(x => x.id.toString() === id.toString());
+        return s ? s.name : "Hizmet";
+    }
+
+    async function saveBizSettings() {
+      bizSettings.type = document.getElementById('bizSelect').value;
+      bizSettings.description = document.getElementById('bizDescription').value;
+      bizSettings.address = document.getElementById('bizAddress').value;
+      if(bizSettings.type === 'Özel') bizSettings.customType = document.getElementById('customBizInput').value;
+      try {
+        const { error } = await supabaseClient.from('businesses').update({ business_type: bizSettings.type, custom_type: bizSettings.customType, description: bizSettings.description, address: bizSettings.address, ai_services: bizSettings.services }).eq('id', currentUser.id);
+        if(error) throw error; alert("Bilgileriniz kaydedildi!"); showView('dashboard');
+      } catch (err) { alert("Kaydetme hatası: " + err.message); }
+    }
+
+    async function loadDashboard() {
+      const content = document.getElementById('app-content');
+      if(currentRole === 'customer') {
+        const { data: b, error } = await supabaseClient.from('businesses').select('*');
+        if(error) return content.innerHTML = "<p>Yüklenemedi.</p>";
+        allBusinesses = b; 
+        content.innerHTML = `<div class="row g-4">${b.map(i => `
+          <div class="col-md-4">
+            <div class="card p-4 shadow-sm border-0 rounded-4 h-100 d-flex flex-column">
+              <h3 class="fw-bold mb-2 text-primary">${i.business_name}</h3>
+              <p class="text-dark small fw-bold mb-3"><i class="fa-solid fa-location-dot me-1 text-danger"></i> ${i.address || 'Adres belirtilmedi'}</p>
+              <div class="bg-light p-3 rounded-3 mb-3 flex-grow-1"><p class="text-secondary small mb-0">${i.description || 'Tanıtım yok.'}</p></div>
+              <button class="btn btn-primary mt-auto py-2 fw-bold" onclick="openBookingPage('${i.id}')">Hemen Randevu Al</button>
+            </div>
+          </div>`).join('')}</div>`;
+      }
+    }
+
+    function openBookingPage(bizId) {
+        const business = allBusinesses.find(b => b.id.toString() === bizId.toString());
+        const content = document.getElementById('app-content');
+        const title = document.getElementById('page-title');
+        title.innerText = business.business_name + " - Randevu Al";
+        let services = business.ai_services;
+        if (typeof services === 'string') { try { services = JSON.parse(services); } catch(e) { services = []; } }
+        services = Array.isArray(services) ? services : [];
+
+        content.innerHTML = `
+            <button onclick="loadDashboard()" class="btn btn-link text-decoration-none mb-4 p-0"><i class="fa-solid fa-arrow-left"></i> Geri Dön</button>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="p-5 bg-white rounded-4 border shadow-sm h-100">
+                        <h4 class="fw-900 mb-4 text-primary text-uppercase">Manuel Randevu</h4>
+                        <div class="mb-3"><label class="small fw-bold text-uppercase">Hizmet Seçin</label>
+                            <select id="custService" class="form-select py-3">
+                                ${services.map(s => `<option value="${s.id}">${s.name} - ₺${s.price}</option>`).join('')}
+                                ${services.length === 0 ? '<option disabled>Hizmet bulunamadı</option>' : ''}
+                            </select>
+                        </div>
+                        <div class="mb-3"><label class="small fw-bold">Tarih</label><input type="date" id="custDate" class="form-control py-3"></div>
+                        <div class="mb-4"><label class="small fw-bold">Saat</label><input type="time" id="custTime" class="form-control py-3"></div>
+                        <button class="btn btn-primary w-100 py-3 fw-bold rounded-3" onclick="confirmManualBooking('${business.id}')">RANDEVUYU ONAYLA</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-5 bg-white rounded-4 border shadow-sm h-100 text-center" style="border-top: 5px solid #2563eb !important;">
+                        <div class="badge bg-primary px-3 py-2 mb-3 text-uppercase">Yapay Zeka Destekli</div>
+                        <h4 class="fw-900 mb-3">AI RANDEVU ASİSTANI</h4>
+                        <p class="text-secondary small mb-5">Asistanımız sizi kayıtlı numaranızdan (<strong>${currentUser.phone}</strong>) arayarak randevunuzu planlasın ve sorularınızı yanıtlasın.</p>
+                        <button class="btn btn-dark w-100 py-4 fw-bold rounded-4 shadow-lg mb-3" onclick="requestAiCall('${business.id}')">RANDEVU VE BİLGİ ALMAK İÇİN ARAMA YAP</button>
+                        <small class="text-muted"><i class="fa-solid fa-clock-rotate-left"></i> 7/24 Aktif Sesli Asistan</small>
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    async function advancedSimulate() {
+      const customerId = document.getElementById('simCustomer').value, serviceId = document.getElementById('simService').value, dateVal = document.getElementById('simDateFull').value, time = document.getElementById('simTime').value;
+      if(!dateVal || !time) return alert("Lütfen tarih ve saat seçin.");
+      const serviceObj = bizSettings.services.find(s => s.id.toString() === serviceId.toString());
+      try {
+          const { error } = await supabaseClient.from('appointments').insert([{ business_id: currentUser.id, customer_id: customerId, date: dateVal, time: time, service_id: serviceId, price: serviceObj ? serviceObj.price : 0, status: 'confirmed' }]);
+          if(error) throw error; alert("Kaydedildi."); showView('dashboard');
+      } catch (err) { alert("Hata: " + err.message); }
+    }
+
+    async function confirmManualBooking(bizId) {
+        const serviceId = document.getElementById('custService').value, date = document.getElementById('custDate').value, time = document.getElementById('custTime').value;
+        if(!date || !time) return alert("Tarih ve saat seçin.");
+        const business = allBusinesses.find(b => b.id.toString() === bizId.toString());
+        let services = business.ai_services;
+        if (typeof services === 'string') { try { services = JSON.parse(services); } catch(e) { services = []; } }
+        const sObj = (services || []).find(s => s.id.toString() === serviceId.toString());
+        try {
+            const { error } = await supabaseClient.from('appointments').insert([{ business_id: bizId, customer_id: currentUser.id, date: date, time: time, service_id: serviceId, price: sObj ? sObj.price : 0, status: 'confirmed' }]);
+            if(error) throw error; alert("Randevunuz oluşturuldu!"); loadDashboard();
+        } catch (err) { alert("Hata: " + err.message); }
+    }
+    
+    async function requestAiCall(bizId) {
+    // Senin server'ındaki ngrok adresi
+    const serverUrl = 'https://exiguous-supersecular-mayola.ngrok-free.dev/make-call'; 
+
+    try {
+        // Butonu görsel olarak güncelle
+        const btn = event.target;
+        const originalText = btn.innerText;
+        btn.innerText = "ARAMA BAŞLATILIYOR...";
+        btn.disabled = true;
+
+        const response = await fetch(serverUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phone: currentUser.phone,        // Kayıtlı müşteri numarası
+                customerName: currentUser.full_name, // Kayıtlı müşteri adı
+                businessId: bizId                // Randevu alınan işletme ID'si
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(`✅ AI Asistan sizi arıyor! Lütfen ${currentUser.phone} numaralı telefonunuzu kontrol edin.`);
+            loadDashboard();
+        } else {
+            alert("❌ Arama hatası: " + result.error);
+        }
+    } catch (err) {
+        console.error("Bağlantı hatası:", err);
+        alert("Node.js server'ına bağlanılamadı. ngrok'un ve server.js'in çalıştığından emin olun.");
+    } finally {
+        // Butonu eski haline getir
+        const btn = document.querySelector('.btn-dark'); 
+        if(btn) {
+            btn.innerText = "RANDEVU VE BİLGİ ALMAK İÇİN ARAMA YAP";
+            btn.disabled = false;
+        }
+    }
+}
+  </script>
+</body>
+</html>
